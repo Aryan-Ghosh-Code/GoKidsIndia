@@ -12,8 +12,9 @@ import {
   Mic2,
   Star,
   ChevronLeft,
-  ChevronRight, 
+  ChevronRight,
   ArrowRight,
+  Calendar,
   Phone,
   Mail,
   MapPin,
@@ -23,120 +24,94 @@ import {
   FadeInUp,
   StaggerContainer,
   StaggerItem,
-  BounceIn,
 } from "@/components/animations/MotionWrapper";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 
-// Custom Social Icons (Lucide-react doesn't export brand icons)
-const InstagramIcon = ({ size = 20 }: { size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-    <circle cx="12" cy="12" r="4" />
-    <circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none" />
-  </svg>
-);
-
-const FacebookIcon = ({ size = 20 }: { size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-  </svg>
-);
-
-const LinkedinIcon = ({ size = 20 }: { size?: number }) => (
-  <svg
-    width={size}
-    height={size}
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <rect x="2" y="9" width="4" height="12" />
-    <circle cx="4" cy="4" r="2" />
-  </svg>
-);
-
 // ─── Data ──────────────────────────────────────────────────────────
 // TODO Week 2+: update hrefs to real routes once built
-const verticals = [
-  {
-    id: "assessments",
-    icon: ClipboardList,
-    title: "Assessments",
-    description:
-      "Discover your child's strengths, learning style, and career aptitude through guided psychometric assessments.",
-    color: "#2BBCB0",
-    href: "/register",
-  },
-  {
-    id: "workshops",
-    icon: BookOpen,
-    title: "Workshops",
-    description:
-      "Skill-building sessions on communication, leadership, creativity, and future-ready careers — live and self-paced.",
-    color: "#F4845F",
-    href: "/register",
-  },
-  {
-    id: "mentor",
-    icon: Users,
-    title: "Mentor",
-    description:
-      "One-on-one sessions with expert educators, psychologists, and career coaches, matched to your child's needs.",
-    color: "#4FC3F7",
-    href: "/register",
-  },
-  {
-    id: "talk",
-    icon: Mic2,
-    title: "Talk",
-    description:
-      "Expert webinars, panel discussions, and recorded sessions for parents and kids navigating growth and change.",
-    color: "#F5C518",
-    href: "/register",
-  },
-];
+// const verticals = [
+//   {
+//     id: "assessments",
+//     icon: ClipboardList,
+//     title: "Assessments",
+//     description:
+//       "Discover your child's strengths, learning style, and career aptitude through guided psychometric assessments.",
+//     color: "#2BBCB0",
+//     href: "/register",
+//   },
+//   {
+//     id: "workshops",
+//     icon: BookOpen,
+//     title: "Workshops",
+//     description:
+//       "Skill-building sessions on communication, leadership, creativity, and future-ready careers — live and self-paced.",
+//     color: "#F4845F",
+//     href: "/register",
+//   },
+//   {
+//     id: "mentor",
+//     icon: Users,
+//     title: "Mentor",
+//     description:
+//       "One-on-one sessions with expert educators, psychologists, and career coaches, matched to your child's needs.",
+//     color: "#4FC3F7",
+//     href: "/register",
+//   },
+//   {
+//     id: "talk",
+//     icon: Mic2,
+//     title: "Talk",
+//     description:
+//       "Expert webinars, panel discussions, and recorded sessions for parents and kids navigating growth and change.",
+//     color: "#F5C518",
+//     href: "/register",
+//   },
+// ];
 
 const steps = [
   {
-    number: "01",
-    title: "Create Your Child's Profile",
+    id: "assess",
+    number: "1",
+    icon: ClipboardList,
+    title: "Assess",
     description:
-      "Tell us about your child's interests, strengths, and goals so we can personalise their journey.",
+      "Understand your child's strengths, gaps, and natural inclinations.",
+    duration: "20-30 min",
+    href: "/assessments",
+    color: "#F5C518",
   },
   {
-    number: "02",
-    title: "Discover & Explore",
-    description:
-      "Take an assessment, join a workshop, or book a mentor session — all in one place.",
+    id: "programs",
+    number: "2",
+    icon: BookOpen,
+    title: "Workshops",
+    description: "Skill-based programs matched to your child's profile.",
+    duration: "4-8 weeks",
+    href: "/workshops",
+    color: "#4FC3F7",
   },
   {
-    number: "03",
-    title: "Grow & Thrive",
+    id: "practice",
+    number: "3",
+    icon: Mic2,
+    title: "Practice",
     description:
-      "Get a personalised report, track progress, and unlock your child's full potential.",
+      "Daily micro-exercises that build habits and track real progress.",
+    duration: "15 min/day",
+    href: "/workshops",
+    color: "#2BBCB0",
+  },
+  {
+    id: "guide",
+    number: "4",
+    icon: Users,
+    title: "Talk",
+    description:
+      "Expert mentors and parent community for personalised guidance.",
+    duration: "On demand",
+    href: "/talk",
+    color: "#F4845F",
   },
 ];
 
@@ -185,6 +160,51 @@ const programs = [
   },
 ];
 
+const communityPosts = [
+  {
+    name: "Priya S.",
+    location: "Mumbai",
+    message:
+      "My daughter just completed the public speaking module — she's so much more confident now!",
+  },
+  {
+    name: "Arun M.",
+    location: "Bangalore",
+    message:
+      "The assessment report helped us understand our son's learning style in a way no school ever explained.",
+  },
+  {
+    name: "Kavita L.",
+    location: "Delhi",
+    message:
+      "Grateful for this community — finally feel heard as a parent navigating these years.",
+  },
+];
+
+const featuredMentors = [
+  {
+    initials: "DR",
+    name: "Dr. Reena Anand",
+    title: "Child Psychologist · 12 years exp.",
+    rating: "4.9",
+    color: "#F5C518",
+  },
+  {
+    initials: "SM",
+    name: "Sneha Mehta",
+    title: "Career Coach · 8 years exp.",
+    rating: "4.8",
+    color: "#2BBCB0",
+  },
+  {
+    initials: "AK",
+    name: "Amit Khurana",
+    title: "Education Specialist · 10 years exp.",
+    rating: "4.9",
+    color: "#4FC3F7",
+  },
+];
+
 const testimonials = [
   {
     initials: "SR",
@@ -226,6 +246,20 @@ const testimonials = [
     quote:
       "Workshops are well-structured and the instructors are genuinely passionate. Rohan looks forward to every session — that alone says everything.",
   },
+];
+
+const trustStats = [
+  { label: "Assessments completed", value: 12400 },
+  { label: "Mentoring sessions", value: 860 },
+  { label: "Active families", value: 3200 },
+];
+
+const trustedBy = [
+  "Times of India",
+  "YourStory",
+  "NDTV Education",
+  "EduMinds India",
+  "Parent Circle",
 ];
 
 // ─── Testimonial Carousel ───────────────────────────────────────────
@@ -372,6 +406,33 @@ function TestimonialsCarousel() {
 
 // ─── Main Page ─────────────────────────────────────────────────────
 export default function HomePage() {
+  const [journeyMode, setJourneyMode] = useState<"full" | "anywhere">("full");
+  const [activeJourneyStep, setActiveJourneyStep] = useState(steps[0].id);
+  const [animatedStats, setAnimatedStats] = useState(trustStats.map(() => 0));
+
+  useEffect(() => {
+    const duration = 1800;
+    const frameMs = 24;
+    const totalFrames = Math.ceil(duration / frameMs);
+    let frame = 0;
+
+    const timer = setInterval(() => {
+      frame += 1;
+      const progress = Math.min(frame / totalFrames, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      setAnimatedStats(
+        trustStats.map((stat) => Math.round(stat.value * eased)),
+      );
+
+      if (progress >= 1) clearInterval(timer);
+    }, frameMs);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const formatStat = (value: number) => `${value.toLocaleString("en-IN")}+`;
+
   return (
     <div className="flex flex-col min-h-screen bg-white">
       <Navbar />
@@ -402,7 +463,7 @@ export default function HomePage() {
                     border: "1px solid #F5C518",
                   }}
                 >
-                  🌟 India's Future Readiness Platform
+                  🌟 India's #1 Child Development Platform
                 </span>
               </motion.div>
 
@@ -424,8 +485,9 @@ export default function HomePage() {
                   marginBottom: 20,
                 }}
               >
-                Prepare Your Child{" "}
-                <span style={{ color: "#F5C518" }}>for the Future</span>, Today
+                Every child is{" "}
+                <span style={{ color: "#F5C518" }}>Capable of More</span>, we
+                help them find out how!
               </motion.h1>
 
               {/* Subheadline */}
@@ -436,9 +498,9 @@ export default function HomePage() {
                 className="text-base sm:text-lg leading-relaxed mb-8"
                 style={{ color: "#6B7280", maxWidth: 480 }}
               >
-                Assessments, workshops, mentorship, and expert talks —
-                everything your child needs to discover their strengths and
-                thrive.
+                Go Kids helps Indian parents discover, develop, and track their
+                child's full potential — beyond marks, beyond grades, beyond
+                limits.
               </motion.p>
 
               {/* CTA Buttons */}
@@ -454,8 +516,9 @@ export default function HomePage() {
                 >
                   <Link
                     href="/register"
-                    className="btn-primary text-base px-7 py-3.5 animate-shimmer"
+                    className="btn-primary text-base px-7 py-3.5 animate-shimmer flex items-center justify-center gap-2"
                   >
+                    <ClipboardList size={20} />
                     Start Free Assessment
                   </Link>
                 </motion.div>
@@ -465,9 +528,9 @@ export default function HomePage() {
                 >
                   <Link
                     href="/workshops"
-                    className="btn-outline text-base px-7 py-3.5"
+                    className="btn-outline text-base px-7 py-3.5 flex items-center justify-center gap-2"
                   >
-                    Explore Workshops
+                    Explore All Programs <ArrowRight size={20} />
                   </Link>
                 </motion.div>
               </motion.div>
@@ -481,9 +544,9 @@ export default function HomePage() {
                 style={{ color: "#6B7280" }}
               >
                 {[
-                  "500+ Kids Assessed",
+                  "12,000+ Kids Assessed",
+                  "98% Parent Satisfaction",
                   "50+ Workshops",
-                  "30+ Expert Mentors",
                 ].map((stat, i) => (
                   <span key={stat} className="flex items-center gap-2">
                     {i > 0 && (
@@ -571,7 +634,7 @@ export default function HomePage() {
       </section>
 
       {/* ── 2. FOUR VERTICALS ────────────────────────────────────── */}
-      <section id="about" className="py-20 bg-white scroll-mt-24">
+      {/* <section id="about" className="py-20 bg-white scroll-mt-24">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInUp className="text-center mb-12">
             <p
@@ -660,89 +723,185 @@ export default function HomePage() {
             })}
           </StaggerContainer>
         </div>
-      </section>
+      </section> */}
 
       {/* ── 3. HOW IT WORKS ──────────────────────────────────────── */}
-      <section className="py-20" style={{ background: "#FAFAF8" }}>
+      <section id="about" className="py-20" style={{ background: "#FAFAF8" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeInUp className="text-center mb-14">
-            <p
-              className="text-sm font-semibold uppercase tracking-wider mb-3"
-              style={{ color: "#F4845F", fontFamily: "var(--font-nunito)" }}
-            >
-              Simple & Effective
-            </p>
-            <h2
-              style={{
-                fontFamily: "var(--font-nunito)",
-                fontWeight: 800,
-                fontSize: "clamp(28px, 4vw, 42px)",
-                color: "#1A1A1A",
-              }}
-            >
-              How Go Kids Works
-            </h2>
+          <FadeInUp className="mb-14">
+            <div className="text-center max-w-3xl mx-auto">
+              <p
+                className="text-sm font-semibold uppercase tracking-wider mb-3"
+                style={{ color: "#F4845F", fontFamily: "var(--font-nunito)" }}
+              >
+                How It Works
+              </p>
+              <h2
+                style={{
+                  fontFamily: "var(--font-nunito)",
+                  fontWeight: 800,
+                  fontSize: "clamp(28px, 4vw, 42px)",
+                  color: "#1A1A1A",
+                }}
+              >
+                Your child&apos;s journey starts here
+              </h2>
+              <p className="mt-2 text-base" style={{ color: "#6B7280" }}>
+                Four connected steps - or start anywhere that feels right.
+              </p>
+            </div>
+
+            <div className="mt-8 flex flex-col items-center gap-2">
+              <div className="relative inline-flex rounded-full p-1 bg-[#F3F4F6] border border-[#E5E7EB]">
+                <button
+                  type="button"
+                  onClick={() => setJourneyMode("full")}
+                  className="relative px-6 py-1.5 rounded-full text-sm font-bold transition-colors duration-300"
+                  style={{
+                    color: journeyMode === "full" ? "#1A1A1A" : "#6B7280",
+                    fontFamily: "var(--font-nunito)",
+                  }}
+                >
+                  {journeyMode === "full" && (
+                    <motion.div
+                      layoutId="journey-pill"
+                      className="absolute inset-0 bg-[#F5C518] rounded-full shadow-sm"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10">Full Journey</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setJourneyMode("anywhere")}
+                  className="relative px-6 py-1.5 rounded-full text-sm font-bold transition-colors duration-300"
+                  style={{
+                    color: journeyMode === "anywhere" ? "#1A1A1A" : "#6B7280",
+                    fontFamily: "var(--font-nunito)",
+                  }}
+                >
+                  {journeyMode === "anywhere" && (
+                    <motion.div
+                      layoutId="journey-pill"
+                      className="absolute inset-0 bg-[#F5C518] rounded-full shadow-sm"
+                      transition={{
+                        type: "spring",
+                        stiffness: 400,
+                        damping: 30,
+                      }}
+                    />
+                  )}
+                  <span className="relative z-10">Start Anywhere</span>
+                </button>
+              </div>
+              <p
+                className="text-xs"
+                style={{ color: "#9CA3AF", fontFamily: "var(--font-nunito)" }}
+              >
+                {journeyMode === "full"
+                  ? "Follow all 4 steps in sequence."
+                  : "Choose any step card below to begin."}
+              </p>
+            </div>
           </FadeInUp>
 
           <div className="relative">
-            {/* Dashed connector line (desktop only) */}
             <div
-              className="hidden lg:block absolute top-10 left-1/2 transform -translate-x-1/2"
+              className="hidden lg:block absolute left-24 right-24"
               style={{
-                width: "calc(66.67% - 80px)",
-                height: 2,
-                borderTop: "2.5px dashed #F5C518",
-                top: "3.5rem",
-                left: "50%",
-                transform: "translateX(-50%)",
+                top: "2.2rem",
+                borderTop:
+                  journeyMode === "full"
+                    ? "2px dashed #F5C518"
+                    : "2px dashed #D1D5DB",
                 pointerEvents: "none",
               }}
               aria-hidden="true"
             />
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 relative z-10">
-              {steps.map((step, i) => (
-                <FadeInUp key={step.number} delay={i * 0.15}>
-                  <div className="flex flex-col items-center text-center">
-                    <BounceIn delay={i * 0.2}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
+              {steps.map((step, i) => {
+                const Icon = step.icon;
+                const isActive = activeJourneyStep === step.id;
+                const highlighted =
+                  journeyMode === "full" ||
+                  (journeyMode === "anywhere" && isActive);
+
+                return (
+                  <FadeInUp key={step.id} delay={i * 0.12}>
+                    <div
+                      className="text-center cursor-pointer"
+                      onClick={() => setActiveJourneyStep(step.id)}
+                    >
                       <div
-                        className="w-20 h-20 rounded-full flex items-center justify-center mb-6 relative"
+                        className="w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 relative transition-all"
                         style={{
-                          background: "#F5C518",
-                          boxShadow: "0 8px 24px rgba(245, 197, 24, 0.35)",
+                          background: highlighted ? "#FFFFFF" : "#F3F4F6",
+                          border: `1px solid ${highlighted ? step.color : "#E5E7EB"}`,
                         }}
                       >
-                        <span
-                          style={{
-                            fontFamily: "var(--font-nunito)",
-                            fontWeight: 800,
-                            fontSize: 28,
-                            color: "#1A1A1A",
-                          }}
-                        >
-                          {step.number}
-                        </span>
+                        <Icon size={20} color={step.color} />
+                        {journeyMode === "full" && (
+                          <span
+                            className="absolute -top-2 -right-2 w-5 h-5 rounded-full text-[10px] font-bold flex items-center justify-center"
+                            style={{
+                              background: "#F5C518",
+                              color: "#1A1A1A",
+                              fontFamily: "var(--font-nunito)",
+                            }}
+                          >
+                            {step.number}
+                          </span>
+                        )}
                       </div>
-                    </BounceIn>
-                    <h3
-                      className="text-xl font-bold mb-3"
-                      style={{
-                        fontFamily: "var(--font-nunito)",
-                        color: "#1A1A1A",
-                      }}
-                    >
-                      {step.title}
-                    </h3>
-                    <p
-                      className="text-sm leading-relaxed max-w-xs"
-                      style={{ color: "#6B7280" }}
-                    >
-                      {step.description}
-                    </p>
-                  </div>
-                </FadeInUp>
-              ))}
+
+                      <h3
+                        className="text-2xl font-bold"
+                        style={{
+                          fontFamily: "var(--font-nunito)",
+                          color: "#1A1A1A",
+                        }}
+                      >
+                        {step.title}
+                      </h3>
+                      <p
+                        className="text-sm leading-relaxed mt-1 mx-auto max-w-[230px]"
+                        style={{ color: "#6B7280" }}
+                      >
+                        {step.description}
+                      </p>
+                      <p className="text-xs mt-2" style={{ color: "#9CA3AF" }}>
+                        {step.duration}
+                      </p>
+                      <Link
+                        href={step.href}
+                        className="mt-2 inline-flex items-center gap-1 text-sm font-semibold"
+                        style={{
+                          color: highlighted ? "#F4845F" : "#9CA3AF",
+                          fontFamily: "var(--font-nunito)",
+                        }}
+                      >
+                        Go here <ArrowRight size={13} />
+                      </Link>
+                    </div>
+                  </FadeInUp>
+                );
+              })}
             </div>
+
+            {journeyMode === "anywhere" && (
+              <p
+                className="text-center mt-8 text-sm"
+                style={{ color: "#6B7280" }}
+              >
+                Start with any step and continue in the order that works for
+                your child.
+              </p>
+            )}
           </div>
         </div>
       </section>
@@ -908,9 +1067,9 @@ export default function HomePage() {
               >
                 <Link
                   href="/workshops"
-                  className="btn-primary text-base px-7 py-3.5"
+                  className="btn-primary text-base px-7 py-3.5 flex items-center justify-center gap-2"
                 >
-                  Browse All Workshops
+                  Explore All Workshops <ArrowRight size={20} />
                 </Link>
               </motion.div>
               <motion.div
@@ -930,7 +1089,234 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 6. TESTIMONIALS ──────────────────────────────────────── */}
+      {/* ── 6. TALK & MENTOR ─────────────────────────────────────── */}
+      <section className="py-20" style={{ background: "#FAFAF8" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInUp className="text-center mb-12 max-w-3xl mx-auto">
+            <p
+              className="text-sm font-semibold uppercase tracking-wider mb-3"
+              style={{ color: "#F4845F", fontFamily: "var(--font-nunito)" }}
+            >
+              Support & Community
+            </p>
+            <h2
+              style={{
+                fontFamily: "var(--font-nunito)",
+                fontWeight: 800,
+                fontSize: "clamp(28px, 4vw, 42px)",
+                color: "#1A1A1A",
+                lineHeight: 1.2,
+              }}
+            >
+              You don&apos;t have to figure this out{" "}
+              <span style={{ color: "#F4845F" }}>alone</span>
+            </h2>
+            <p className="mt-3 text-base" style={{ color: "#6B7280" }}>
+              Two ways to get the support you need — community warmth or expert
+              1-on-1 sessions.
+            </p>
+          </FadeInUp>
+
+          <StaggerContainer className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Community */}
+            <StaggerItem>
+              <div
+                className="h-full flex flex-col rounded-2xl bg-white p-6 sm:p-8"
+                style={{
+                  border: "1px solid rgba(244,132,95,0.22)",
+                  boxShadow: "0 10px 36px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span
+                  className="inline-block self-start px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4"
+                  style={{
+                    background: "#FEF0EB",
+                    color: "#F4845F",
+                    fontFamily: "var(--font-nunito)",
+                  }}
+                >
+                  Talk — Community
+                </span>
+                <h3
+                  className="text-xl font-bold mb-2"
+                  style={{
+                    fontFamily: "var(--font-nunito)",
+                    color: "#1A1A1A",
+                  }}
+                >
+                  You&apos;re not alone in this.
+                </h3>
+                <p
+                  className="text-sm leading-relaxed mb-5"
+                  style={{ color: "#6B7280" }}
+                >
+                  A safe space for Indian parents to discuss, share experiences,
+                  and grow together.
+                </p>
+
+                <div className="flex flex-col gap-3 flex-1">
+                  {communityPosts.map((post) => (
+                    <div
+                      key={post.name}
+                      className="rounded-xl px-4 py-3 text-sm leading-relaxed"
+                      style={{
+                        background: "#FAFAF8",
+                        color: "#4B5563",
+                        border: "1px solid #F3F4F6",
+                      }}
+                    >
+                      <span
+                        className="font-semibold"
+                        style={{ color: "#1A1A1A" }}
+                      >
+                        {post.name}, {post.location}
+                      </span>
+                      {" — "}
+                      {post.message}
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <p
+                    className="flex items-center gap-2 text-sm font-semibold"
+                    style={{
+                      color: "#2BBCB0",
+                      fontFamily: "var(--font-nunito)",
+                    }}
+                  >
+                    <span
+                      className="w-2 h-2 rounded-full shrink-0"
+                      style={{ background: "#2BBCB0" }}
+                      aria-hidden
+                    />
+                    14 parents online now
+                  </p>
+                  <motion.div
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Link
+                      href="/talk"
+                      className="btn-primary text-base px-7 py-3.5 flex items-center justify-center gap-2"
+                    >
+                      <Users size={20} />
+                      Join the Community <ArrowRight size={20} />
+                    </Link>
+                  </motion.div>
+                </div>
+              </div>
+            </StaggerItem>
+
+            {/* Mentor */}
+            <StaggerItem>
+              <div
+                className="h-full flex flex-col rounded-2xl bg-white p-6 sm:p-8"
+                style={{
+                  border: "1px solid rgba(79,195,247,0.24)",
+                  boxShadow: "0 10px 36px rgba(0,0,0,0.06)",
+                }}
+              >
+                <span
+                  className="inline-block self-start px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wide mb-4"
+                  style={{
+                    background: "#E8F6FE",
+                    color: "#4FC3F7",
+                    fontFamily: "var(--font-nunito)",
+                  }}
+                >
+                  Mentor — 1-on-1 Sessions
+                </span>
+                <h3
+                  className="text-xl font-bold mb-2"
+                  style={{
+                    fontFamily: "var(--font-nunito)",
+                    color: "#1A1A1A",
+                  }}
+                >
+                  Get answers, not more anxiety.
+                </h3>
+                <p
+                  className="text-sm leading-relaxed mb-5"
+                  style={{ color: "#6B7280" }}
+                >
+                  Book a session with a child development expert — personalised,
+                  confidential, effective.
+                </p>
+
+                <div className="flex flex-col gap-3 flex-1">
+                  {featuredMentors.map((mentor) => (
+                    <div
+                      key={mentor.name}
+                      className="flex items-center gap-3 rounded-xl px-4 py-3"
+                      style={{
+                        background: "#FAFAF8",
+                        border: "1px solid #F3F4F6",
+                      }}
+                    >
+                      <div
+                        className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-xs font-bold"
+                        style={{
+                          background: mentor.color,
+                          color:
+                            mentor.color === "#F5C518" ? "#1A1A1A" : "white",
+                          fontFamily: "var(--font-nunito)",
+                        }}
+                      >
+                        {mentor.initials}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p
+                          className="text-sm font-bold truncate"
+                          style={{
+                            color: "#1A1A1A",
+                            fontFamily: "var(--font-nunito)",
+                          }}
+                        >
+                          {mentor.name}
+                        </p>
+                        <p
+                          className="text-xs truncate"
+                          style={{ color: "#6B7280" }}
+                        >
+                          {mentor.title}
+                        </p>
+                      </div>
+                      <div
+                        className="flex items-center gap-1 shrink-0 text-sm font-semibold"
+                        style={{
+                          color: "#1A1A1A",
+                          fontFamily: "var(--font-nunito)",
+                        }}
+                      >
+                        <Star size={14} fill="#F5C518" stroke="#F5C518" />
+                        {mentor.rating}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-6 flex justify-end">
+                  <motion.div
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    <Link
+                      href="/mentors"
+                      className="btn-primary text-base px-7 py-3.5 flex items-center justify-center gap-2"
+                    >
+                      <Calendar size={20} />
+                      Book a Session <ArrowRight size={20} />
+                    </Link>
+                  </motion.div>
+                </div>
+              </div>
+            </StaggerItem>
+          </StaggerContainer>
+        </div>
+      </section>
+
+      {/* ── 7. TESTIMONIALS ──────────────────────────────────────── */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInUp className="text-center mb-12">
@@ -953,6 +1339,77 @@ export default function HomePage() {
           </FadeInUp>
 
           <TestimonialsCarousel />
+        </div>
+      </section>
+
+      {/* ── 7. STATS & TRUST ─────────────────────────────────────── */}
+      <section className="py-14" style={{ background: "#FAFAF8" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInUp>
+            <div
+              className="rounded-2xl overflow-hidden grid grid-cols-1 md:grid-cols-3 bg-white"
+              style={{
+                border: "1px solid #F3F4F6",
+                boxShadow: "0 6px 24px rgba(0,0,0,0.06)",
+              }}
+            >
+              {trustStats.map((stat, index) => (
+                <div
+                  key={stat.label}
+                  className="py-8 px-6 md:px-10 text-center flex flex-col items-center justify-center transition-shadow duration-200 hover:shadow-lg"
+                  style={{
+                    borderRight:
+                      index === trustStats.length - 1
+                        ? "none"
+                        : "1px solid #F3F4F6",
+                  }}
+                >
+                  <p
+                    style={{
+                      fontFamily: "var(--font-nunito)",
+                      fontWeight: 800,
+                      fontSize: "clamp(36px, 6vw, 64px)",
+                      color: "#1A1A1A",
+                      lineHeight: 1,
+                      marginBottom: 6,
+                    }}
+                  >
+                    {formatStat(animatedStats[index])}
+                  </p>
+                  <p
+                    className="text-sm leading-relaxed"
+                    style={{ color: "#6B7280" }}
+                  >
+                    {stat.label}
+                  </p>
+                </div>
+              ))}
+            </div>
+
+            <div className="mt-10 text-center">
+              <p
+                className="text-xs font-bold uppercase tracking-[0.18em] mb-4"
+                style={{ color: "#9CA3AF", fontFamily: "var(--font-nunito)" }}
+              >
+                Trusted By Schools & Featured In
+              </p>
+              <div className="flex flex-wrap items-center justify-center gap-4 max-w-2xl mx-auto">
+                {trustedBy.map((brand) => (
+                  <span
+                    key={brand}
+                    className="px-5 py-2 rounded-full text-sm font-semibold bg-white shadow-sm transform transition-all duration-150 hover:scale-105"
+                    style={{
+                      border: "1px solid #F3F4F6",
+                      color: "#6B7280",
+                      fontFamily: "var(--font-nunito)",
+                    }}
+                  >
+                    {brand}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </FadeInUp>
         </div>
       </section>
 
@@ -998,10 +1455,13 @@ export default function HomePage() {
                 marginBottom: 12,
               }}
             >
-              Ready to Unlock Your Child's Potential?
+              <span className="block">Start with a free assessment.</span>
+              <span className="block">See what your child is truly</span>
+              <span className="block">capable of.</span>
             </h2>
             <p className="text-base mb-8" style={{ color: "#374151" }}>
-              Join 500+ families already building tomorrow's leaders.
+              No commitments. No pressure. Just honest, science-backed clarity
+              about your child — in 30 minutes.
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4">
               <motion.div
@@ -1010,12 +1470,13 @@ export default function HomePage() {
               >
                 <Link
                   href="/register"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-base text-white transition-all hover:opacity-90"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-base text-white transition-all hover:opacity-90"
                   style={{
                     background: "#1A1A1A",
                     fontFamily: "var(--font-nunito)",
                   }}
                 >
+                  <ClipboardList size={20} />
                   Book a Free Assessment
                 </Link>
               </motion.div>
@@ -1025,14 +1486,14 @@ export default function HomePage() {
               >
                 <Link
                   href="/workshops"
-                  className="inline-flex items-center justify-center px-8 py-3.5 rounded-full font-bold text-base transition-all border-2 border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white"
+                  className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full font-bold text-base transition-all border-2 border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white"
                   style={{
                     background: "white",
                     color: "#1A1A1A",
                     fontFamily: "var(--font-nunito)",
                   }}
                 >
-                  Browse Workshops
+                  Browse Workshops <ArrowRight size={20} />
                 </Link>
               </motion.div>
             </div>
@@ -1065,7 +1526,7 @@ export default function HomePage() {
               style={{ color: "#6B7280" }}
             >
               We are happy to help you choose the right path for your child.
-              Reach out through social media or connect with us directly.
+              Connect with us directly for guidance and support.
             </p>
           </FadeInUp>
 
@@ -1076,203 +1537,115 @@ export default function HomePage() {
               boxShadow: "0 10px 40px rgba(0,0,0,0.08)",
             }}
           >
-            <div className="grid grid-cols-1 lg:grid-cols-2">
-              {/* Left: Socials */}
-              <div className="p-7 sm:p-10" style={{ background: "#FAFAF8" }}>
-                <h3
-                  className="text-xl font-bold mb-3"
-                  style={{ color: "#1A1A1A", fontFamily: "var(--font-nunito)" }}
+            <div className="p-7 sm:p-10 bg-white">
+              <h3
+                className="text-xl font-bold mb-3"
+                style={{ color: "#1A1A1A", fontFamily: "var(--font-nunito)" }}
+              >
+                Contact Details
+              </h3>
+              <p className="text-sm mb-6" style={{ color: "#6B7280" }}>
+                Prefer a direct conversation? Call or email us anytime.
+              </p>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                <div
+                  className="rounded-2xl p-5"
+                  style={{
+                    border: "1px solid #F3F4F6",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+                  }}
                 >
-                  Socials
-                </h3>
-                <p className="text-sm mb-6" style={{ color: "#6B7280" }}>
-                  Follow us and stay updated with workshops, assessments, and
-                  new programs.
-                </p>
-                {/* Changed to grid-cols-1 for vertical stacking on all screen sizes */}
-                <div className="grid grid-cols-1 gap-4">
-                  {[
-                    {
-                      label: "Instagram",
-                      href: "https://www.instagram.com/gokidsindia",
-                      icon: InstagramIcon,
-                      accent: "#F4845F",
-                      bg: "#FEF0EB",
-                    },
-                    {
-                      label: "Facebook",
-                      href: "https://www.facebook.com/Gokidszkp",
-                      icon: FacebookIcon,
-                      accent: "#4FC3F7",
-                      bg: "#E8F6FE",
-                    },
-                    {
-                      label: "LinkedIn",
-                      href: "https://www.linkedin.com/in/modipallavi/",
-                      icon: LinkedinIcon,
-                      accent: "#2BBCB0",
-                      bg: "#E8F8F7",
-                    },
-                  ].map(({ label, href, icon: Icon, accent, bg }) => (
-                    <motion.a
-                      key={label}
-                      href={href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ y: -3 }}
-                      whileTap={{ scale: 0.98 }}
-                      className="rounded-2xl p-4 group"
-                      style={{
-                        border: "1px solid #F3F4F6",
-                        background: "white",
-                        boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
-                      }}
-                      aria-label={label}
+                  <div className="flex items-start gap-3">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ background: "#FFF3CC", color: "#92650A" }}
                     >
-                      <div className="flex items-start gap-3">
-                        <div
-                          className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                          style={{ background: bg, color: accent }}
-                        >
-                          <Icon size={18} />
-                        </div>
-                        <div className="min-w-0">
-                          <p
-                            className="text-sm font-bold mb-0.5"
-                            style={{
-                              color: "#1A1A1A",
-                              fontFamily: "var(--font-nunito)",
-                            }}
-                          >
-                            {label}
-                          </p>
-                          <p
-                            className="text-xs font-semibold mt-2"
-                            style={{
-                              color: accent,
-                              fontFamily: "var(--font-nunito)",
-                            }}
-                          >
-                            Open →
-                          </p>
-                        </div>
-                      </div>
-                    </motion.a>
-                  ))}
+                      <Phone size={18} />
+                    </div>
+                    <div>
+                      <p
+                        className="text-sm font-bold mb-1"
+                        style={{
+                          color: "#1A1A1A",
+                          fontFamily: "var(--font-nunito)",
+                        }}
+                      >
+                        Call Us
+                      </p>
+                      <a
+                        href="tel:+919876524155"
+                        className="text-sm font-semibold hover:underline"
+                        style={{ color: "#374151" }}
+                      >
+                        +91-9876524155
+                      </a>
+                    </div>
+                  </div>
                 </div>
-              </div>
 
-              {/* Right: Details */}
-              <div className="p-7 sm:p-10 bg-white">
-                <h3
-                  className="text-xl font-bold mb-3"
-                  style={{ color: "#1A1A1A", fontFamily: "var(--font-nunito)" }}
+                <div
+                  className="rounded-2xl p-5"
+                  style={{
+                    border: "1px solid #F3F4F6",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+                  }}
                 >
-                  Contact Details
-                </h3>
-                <p className="text-sm mb-6" style={{ color: "#6B7280" }}>
-                  Prefer a direct conversation? Call or email us anytime.
-                </p>
-
-                <div className="grid grid-cols-1 gap-4">
-                  <div
-                    className="rounded-2xl p-5"
-                    style={{
-                      border: "1px solid #F3F4F6",
-                      boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
-                    }}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: "#FFF3CC", color: "#92650A" }}
+                  <div className="flex items-start gap-3">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ background: "#E8F8F7", color: "#2BBCB0" }}
+                    >
+                      <Mail size={18} />
+                    </div>
+                    <div className="min-w-0">
+                      <p
+                        className="text-sm font-bold mb-1"
+                        style={{
+                          color: "#1A1A1A",
+                          fontFamily: "var(--font-nunito)",
+                        }}
                       >
-                        <Phone size={18} />
-                      </div>
-                      <div>
-                        <p
-                          className="text-sm font-bold mb-1"
-                          style={{
-                            color: "#1A1A1A",
-                            fontFamily: "var(--font-nunito)",
-                          }}
-                        >
-                          Call Us
-                        </p>
-                        <a
-                          href="tel:+919876524155"
-                          className="text-sm font-semibold hover:underline"
-                          style={{ color: "#374151" }}
-                        >
-                          +91-9876524155
-                        </a>
-                      </div>
+                        Email
+                      </p>
+                      <a
+                        href="mailto:pallavimodi@gmail.com"
+                        className="text-sm font-semibold hover:underline break-all"
+                        style={{ color: "#374151" }}
+                      >
+                        pallavimodi@gmail.com
+                      </a>
                     </div>
                   </div>
+                </div>
 
-                  <div
-                    className="rounded-2xl p-5"
-                    style={{
-                      border: "1px solid #F3F4F6",
-                      boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
-                    }}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: "#E8F8F7", color: "#2BBCB0" }}
-                      >
-                        <Mail size={18} />
-                      </div>
-                      <div className="min-w-0">
-                        <p
-                          className="text-sm font-bold mb-1"
-                          style={{
-                            color: "#1A1A1A",
-                            fontFamily: "var(--font-nunito)",
-                          }}
-                        >
-                          Email
-                        </p>
-                        <a
-                          href="mailto:pallavimodi@gmail.com"
-                          className="text-sm font-semibold hover:underline break-all"
-                          style={{ color: "#374151" }}
-                        >
-                          pallavimodi@gmail.com
-                        </a>
-                      </div>
+                <div
+                  className="rounded-2xl p-5"
+                  style={{
+                    border: "1px solid #F3F4F6",
+                    boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
+                  }}
+                >
+                  <div className="flex items-start gap-3">
+                    <div
+                      className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+                      style={{ background: "#E8F6FE", color: "#4FC3F7" }}
+                    >
+                      <MapPin size={18} />
                     </div>
-                  </div>
-
-                  <div
-                    className="rounded-2xl p-5"
-                    style={{
-                      border: "1px solid #F3F4F6",
-                      boxShadow: "0 2px 12px rgba(0,0,0,0.05)",
-                    }}
-                  >
-                    <div className="flex items-start gap-3">
-                      <div
-                        className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                        style={{ background: "#E8F6FE", color: "#4FC3F7" }}
+                    <div className="min-w-0">
+                      <p
+                        className="text-sm font-bold mb-1"
+                        style={{
+                          color: "#1A1A1A",
+                          fontFamily: "var(--font-nunito)",
+                        }}
                       >
-                        <MapPin size={18} />
-                      </div>
-                      <div className="min-w-0">
-                        <p
-                          className="text-sm font-bold mb-1"
-                          style={{
-                            color: "#1A1A1A",
-                            fontFamily: "var(--font-nunito)",
-                          }}
-                        >
-                          Location
-                        </p>
-                        <p className="text-sm" style={{ color: "#374151" }}>
-                          SCO-2, Behind Gopals, Patiala Road, Zirakpur
-                        </p>
-                      </div>
+                        Location
+                      </p>
+                      <p className="text-sm" style={{ color: "#374151" }}>
+                        SCO-2, Behind Gopals, Patiala Road, Zirakpur
+                      </p>
                     </div>
                   </div>
                 </div>
