@@ -1,18 +1,23 @@
 import nodemailer from "nodemailer";
 
 export const transporter = nodemailer.createTransport({
-  host: process.env.EMAIL_HOST || "smtp.gmail.com",
-  port: Number(process.env.EMAIL_PORT) || 587,
+  // host: process.env.EMAIL_HOST || "smtp.gmail.com",
+  host: "smtp.gmail.com",
+  // port: Number(process.env.EMAIL_PORT) || 587,
+  port: 587,
   secure: false,
   auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
+    // user: process.env.EMAIL_USER,
+    user: "dummy@gmail.com",
+    // pass: process.env.EMAIL_PASS,
+    pass: "dummy_pass",
   },
 });
 
 export async function sendOtpEmail(email: string, name: string, otp: string) {
   await transporter.sendMail({
-    from: `"Go Kids" <${process.env.EMAIL_FROM || "noreply@gokids.co.in"}>`,
+    // from: `"Go Kids" <${process.env.EMAIL_FROM || "noreply@gokids.co.in"}>`,
+    from: `"Go Kids" <noreply@gokids.co.in>`,
     to: email,
     subject: "Your Go Kids OTP Code",
     html: `

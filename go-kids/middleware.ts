@@ -19,8 +19,8 @@ const ROLE_REDIRECTS: Record<string, string> = {
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  // const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const token = await getToken({ req, secret: "dummy_nextauth_secret_for_local_and_build" });
 
   // Redirect logged-in users away from auth pages
   if (token && (pathname === "/login" || pathname === "/register")) {
