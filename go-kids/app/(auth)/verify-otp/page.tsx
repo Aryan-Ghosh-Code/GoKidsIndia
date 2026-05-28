@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { Loader2, CheckCircle, RefreshCw, ArrowLeft } from "lucide-react";
+import BrandLogo from "@/components/shared/BrandLogo";
 
 const OTP_LENGTH = 6;
 
@@ -166,16 +167,10 @@ function VerifyOtpForm() {
             <ArrowLeft size={14} /> Back to Register
           </Link>
 
-          {/* Logo */}
           <div className="text-center mb-8">
-            <Link href="/" className="inline-block">
-              <div
-                className="inline-block px-4 py-2 rounded-xl text-xl font-extrabold mb-4"
-                style={{ background: "#F5C518", color: "#1A1A1A", fontFamily: "var(--font-nunito)" }}
-              >
-                🌟 Go Kids
-              </div>
-            </Link>
+            <div className="flex justify-center mb-4">
+              <BrandLogo height={48} />
+            </div>
 
             <AnimatePresence mode="wait">
               {success ? (

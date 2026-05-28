@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { Home, ArrowRight } from "lucide-react";
+import BrandLogo from "@/components/shared/BrandLogo";
 
 export default function NotFound() {
   return (
@@ -32,15 +33,9 @@ export default function NotFound() {
         transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         className="relative text-center max-w-md w-full"
       >
-        {/* Logo */}
-        <Link href="/" className="inline-block mb-8">
-          <div
-            className="inline-block px-4 py-2 rounded-xl text-xl font-extrabold"
-            style={{ background: "#F5C518", color: "#1A1A1A", fontFamily: "var(--font-nunito)" }}
-          >
-            🌟 Go Kids
-          </div>
-        </Link>
+        <div className="flex justify-center mb-8">
+          <BrandLogo height={48} />
+        </div>
 
         {/* 404 Illustration */}
         <motion.div

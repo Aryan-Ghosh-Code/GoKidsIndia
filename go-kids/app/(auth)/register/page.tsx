@@ -8,6 +8,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import { Eye, EyeOff, User, Mail, Phone, Lock, ArrowRight, Loader2, ArrowLeft } from "lucide-react";
+import BrandLogo from "@/components/shared/BrandLogo";
 
 const registerSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100),
@@ -107,16 +108,10 @@ export default function RegisterPage() {
             </Link>
           </div>
 
-          {/* Logo */}
           <div className="text-center mb-8">
-            <Link href="/" className="inline-block">
-              <div
-                className="inline-block px-4 py-2 rounded-xl text-xl font-extrabold mb-4"
-                style={{ background: "#F5C518", color: "#1A1A1A", fontFamily: "var(--font-nunito)" }}
-              >
-                🌟 Go Kids
-              </div>
-            </Link>
+            <div className="flex justify-center mb-4">
+              <BrandLogo height={48} />
+            </div>
             <h1
               className="text-2xl font-extrabold"
               style={{ fontFamily: "var(--font-nunito)", color: "#1A1A1A" }}

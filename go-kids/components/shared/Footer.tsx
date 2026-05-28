@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BrandLogo from "@/components/shared/BrandLogo";
 
 // Inline SVG social icons (lucide-react v0.x doesn't export Instagram/Youtube/Linkedin)
 function InstagramSvg() {
@@ -53,19 +54,8 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-10">
           {/* Brand Column */}
           <div className="md:col-span-2">
-            <div
-              className="inline-block mb-4"
-              style={{
-                background: "#F5C518",
-                borderRadius: 10,
-                padding: "6px 14px",
-                fontFamily: "var(--font-nunito)",
-                fontWeight: 800,
-                fontSize: 22,
-                color: "#1A1A1A",
-              }}
-            >
-              🌟 Go Kids
+            <div className="mb-4">
+              <BrandLogo height={44} href="/" />
             </div>
             <p className="text-sm leading-relaxed" style={{ color: "#9CA3AF", maxWidth: 260 }}>
               India's Future Readiness Platform; helping children discover their strengths and thrive in tomorrow's world.

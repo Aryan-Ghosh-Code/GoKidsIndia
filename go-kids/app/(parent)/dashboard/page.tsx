@@ -3,6 +3,7 @@ import { authOptions } from "@/lib/auth/authOptions";
 import { redirect } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
+import BrandLogo from "@/components/shared/BrandLogo";
 
 export const metadata: Metadata = {
   title: "Dashboard | Go Kids",
@@ -35,12 +36,8 @@ export default async function ParentDashboard() {
         className="relative bg-white rounded-3xl p-10 max-w-lg w-full text-center"
         style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.1)", border: "1px solid #F3F4F6" }}
       >
-        {/* Logo */}
-        <div
-          className="inline-block px-4 py-2 rounded-xl text-xl font-extrabold mb-6"
-          style={{ background: "#F5C518", color: "#1A1A1A", fontFamily: "var(--font-nunito)" }}
-        >
-          🌟 Go Kids
+        <div className="flex justify-center mb-6">
+          <BrandLogo height={48} href={false} />
         </div>
 
         {/* Welcome */}

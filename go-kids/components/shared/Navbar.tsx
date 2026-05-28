@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import Image from "next/image";
 import { Menu, X } from "lucide-react";
+import BrandLogo from "@/components/shared/BrandLogo";
 
 const navLinks = [
   { label: "Assessments", href: "/assessments" },
@@ -39,37 +39,8 @@ export default function Navbar() {
             : "bg-transparent"
         }`}
       >
-        <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          {/* Logo */}
-          <Link href="/" className="flex-shrink-0 animate-wobble" aria-label="Go Kids Home">
-            <div
-              className="relative"
-              style={{ width: 120, height: 44 }}
-            >
-              {/* Fallback text logo when image missing */}
-              <div
-                className="flex items-center gap-2 h-full"
-                style={{ display: "flex", alignItems: "center" }}
-              >
-                <div
-                  style={{
-                    background: "#F5C518",
-                    borderRadius: 8,
-                    padding: "4px 10px",
-                    fontFamily: "var(--font-nunito)",
-                    fontWeight: 800,
-                    fontSize: 20,
-                    color: "#1A1A1A",
-                    letterSpacing: "-0.5px",
-                    whiteSpace: "nowrap",
-                    lineHeight: 1.2,
-                  }}
-                >
-                  Go Kids
-                </div>
-              </div>
-            </div>
-          </Link>
+        <nav className="max-w-7xl mx-auto py-5 px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <BrandLogo height={40} priority />
 
           {/* Desktop Nav Links */}
           <ul className="hidden lg:flex items-center gap-6">
@@ -136,19 +107,7 @@ export default function Navbar() {
         aria-label="Navigation menu"
       >
         <div className="flex items-center justify-between p-5 border-b border-[#F3F4F6]">
-          <span
-            style={{
-              background: "#F5C518",
-              borderRadius: 8,
-              padding: "4px 10px",
-              fontFamily: "var(--font-nunito)",
-              fontWeight: 800,
-              fontSize: 18,
-              color: "#1A1A1A",
-            }}
-          >
-            Go Kids
-          </span>
+          <BrandLogo height={36} />
           <button
             onClick={() => setMobileOpen(false)}
             className="p-2 rounded-lg hover:bg-[#F3F4F6] transition-colors"

@@ -9,6 +9,7 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
 import { Eye, EyeOff, Mail, Lock, ArrowRight, Loader2, CheckCircle, ArrowLeft } from "lucide-react";
+import BrandLogo from "@/components/shared/BrandLogo";
 
 const loginSchema = z.object({
   email: z.string().email("Please enter a valid email"),
@@ -90,16 +91,10 @@ function LoginForm() {
             </Link>
           </div>
 
-          {/* Logo */}
           <div className="text-center mb-8">
-            <Link href="/" className="inline-block">
-              <div
-                className="inline-block px-4 py-2 rounded-xl text-xl font-extrabold mb-4"
-                style={{ background: "#F5C518", color: "#1A1A1A", fontFamily: "var(--font-nunito)" }}
-              >
-                🌟 Go Kids
-              </div>
-            </Link>
+            <div className="flex justify-center mb-4">
+              <BrandLogo height={48} />
+            </div>
             <h1
               className="text-2xl font-extrabold"
               style={{ fontFamily: "var(--font-nunito)", color: "#1A1A1A" }}
