@@ -14,7 +14,7 @@ export default function BrandLogo({
   height = 40,
   href = "/",
   className = "",
-  priority = false,
+  priority = true,
 }: BrandLogoProps) {
   const width = Math.round(height * 2.85);
 

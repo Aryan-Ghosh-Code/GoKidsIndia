@@ -28,47 +28,6 @@ import {
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
 
-// ─── Data ──────────────────────────────────────────────────────────
-// TODO Week 2+: update hrefs to real routes once built
-// const verticals = [
-//   {
-//     id: "assessments",
-//     icon: ClipboardList,
-//     title: "Assessments",
-//     description:
-//       "Discover your child's strengths, learning style, and career aptitude through guided psychometric assessments.",
-//     color: "#2BBCB0",
-//     href: "/register",
-//   },
-//   {
-//     id: "workshops",
-//     icon: BookOpen,
-//     title: "Workshops",
-//     description:
-//       "Skill-building sessions on communication, leadership, creativity, and future-ready careers — live and self-paced.",
-//     color: "#F4845F",
-//     href: "/register",
-//   },
-//   {
-//     id: "mentor",
-//     icon: Users,
-//     title: "Mentor",
-//     description:
-//       "One-on-one sessions with expert educators, psychologists, and career coaches, matched to your child's needs.",
-//     color: "#4FC3F7",
-//     href: "/register",
-//   },
-//   {
-//     id: "talk",
-//     icon: Mic2,
-//     title: "Talk",
-//     description:
-//       "Expert webinars, panel discussions, and recorded sessions for parents and kids navigating growth and change.",
-//     color: "#F5C518",
-//     href: "/register",
-//   },
-// ];
-
 const steps = [
   {
     id: "assess",
