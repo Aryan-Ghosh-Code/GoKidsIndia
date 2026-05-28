@@ -261,7 +261,7 @@ function EngagementBarChart() {
             {
               label: "Minutes of Sustained Engagement",
               data: [8, 12, 22, 28],
-              backgroundColor: ["#F3F4F6", "#E5E7EB", "#2BBCB0", "#F5C518"],
+              backgroundColor: ["#94A3B8", "#CBD5E1", "#2BBCB0", "#F5C518"],
               borderRadius: 8,
               borderSkipped: false,
             },
@@ -574,13 +574,13 @@ export default function InsightsSection() {
 
             {/* Source + CTA footer */}
             <div
-              className="px-8 py-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+              className="px-8 py-5 flex flex-col items-center sm:flex-row sm:items-center justify-between gap-4 text-center sm:text-left"
               style={{ borderTop: "1px solid #F3F4F6", background: "#FAFAF8" }}
             >
               <p style={{ fontSize: 11, color: "#9CA3AF", fontStyle: "italic" }}>
                 📊 {meta.source}
               </p>
-              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+              <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }} className="flex justify-center w-full sm:w-auto">
                 <Link
                   href="/assessments"
                   className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-sm font-bold transition-all"
@@ -601,7 +601,7 @@ export default function InsightsSection() {
         {/* ── Bottom investor callout ── */}
         <FadeInUp className="mt-10">
           <div
-            className="rounded-2xl px-8 py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            className="rounded-2xl px-8 py-6 flex flex-col items-center sm:flex-row sm:items-center justify-between gap-4 text-center sm:text-left"
             style={{
               background: "linear-gradient(135deg, #FFFDF9 0%, #FFF6F0 100%)",
               border: "1px solid #FFE3D8",

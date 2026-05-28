@@ -11,6 +11,7 @@ const navLinks = [
   { label: "Mentor", href: "/mentors" },
   { label: "Talk", href: "/talk" },
   { label: "About", href: "/#about" },
+  { label: "Insights", href: "/#insights" },
   { label: "Contact", href: "/#contact" },
 ];
 
