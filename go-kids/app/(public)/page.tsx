@@ -2,8 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
-import { useState, useEffect, useCallback } from "react";
+import { motion, useInView } from "framer-motion";
+import { useState, useEffect, useCallback, useRef } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import {
   ClipboardList,
@@ -23,6 +23,11 @@ import {
   PenTool,
   Sparkles,
   Clock,
+  Pencil,
+  Brain,
+  Heart,
+  Flame,
+  Folder,
 } from "lucide-react";
 import FloatingShapes from "@/components/animations/FloatingShapes";
 import {
@@ -80,48 +85,95 @@ const steps = [
   },
 ];
 
-const programs = [
+const programsData = [
   {
-    age: "Ages 4–7",
-    label: "Early Explorers",
-    image: "/images/programs-3.jpg",
-    badgeColor: "#4FC3F7",
-    programs: [
-      "Creative Arts",
-      "Storytelling",
-      "Early STEM Play",
-      "Social Skills",
-    ],
-    chipColor: "#2BBCB0",
-    href: "/",
+    title: "Writing Speed",
+    description: "Build fluency and confidence in written expression for school and life.",
+    level: "Beginner",
+    category: "Communication",
+    iconType: "pencil",
+    iconBg: "#FEF0EB",
+    iconColor: "#F4845F",
+    levelBg: "#E8F8F7",
+    levelColor: "#2BBCB0",
   },
   {
-    age: "Ages 8–12",
-    label: "Young Achievers",
-    image: "/images/programs-1.jpg",
-    badgeColor: "#F5C518",
-    programs: [
-      "Robotics & Coding",
-      "Communication Skills",
-      "Career Exploration",
-      "Leadership Basics",
-    ],
-    chipColor: "#F4845F",
-    href: "/",
+    title: "Spelling Mastery",
+    description: "From uncertainty to precision — build a strong vocabulary foundation.",
+    level: "Beginner",
+    category: "Communication",
+    iconType: "text-abc",
+    iconBg: "#E8F8F7",
+    iconColor: "#2BBCB0",
+    levelBg: "#E8F8F7",
+    levelColor: "#2BBCB0",
   },
   {
-    age: "Ages 13–16",
-    label: "Future Leaders",
-    image: "/images/programs-2.jpg",
-    badgeColor: "#F4845F",
-    programs: [
-      "Career Aptitude",
-      "Public Speaking",
-      "Critical Thinking",
-      "Mentorship Sessions",
-    ],
-    chipColor: "#4FC3F7",
-    href: "/",
+    title: "Public Speaking",
+    description: "Speak with confidence, clarity, and presence — in class and beyond.",
+    level: "Intermediate",
+    category: "Communication",
+    iconType: "mic",
+    iconBg: "#FEF0EB",
+    iconColor: "#F4845F",
+    levelBg: "#F3EEFF",
+    levelColor: "#8B5CF6",
+    isPopular: true,
+  },
+  {
+    title: "Critical Thinking",
+    description: "Ask better questions, solve harder problems, think independently.",
+    level: "Intermediate",
+    category: "Cognitive",
+    iconType: "brain",
+    iconBg: "#F3EEFF",
+    iconColor: "#8B5CF6",
+    levelBg: "#F3EEFF",
+    levelColor: "#8B5CF6",
+  },
+  {
+    title: "Creative Storytelling",
+    description: "Unlock imagination and narrative skills that last a lifetime.",
+    level: "Beginner",
+    category: "Communication",
+    iconType: "book",
+    iconBg: "#FFF0F5",
+    iconColor: "#EC4899",
+    levelBg: "#E8F8F7",
+    levelColor: "#2BBCB0",
+  },
+  {
+    title: "Emotional Vocabulary",
+    description: "Name, understand, and manage emotions for stronger relationships.",
+    level: "Beginner",
+    category: "Emotional",
+    iconType: "heart",
+    iconBg: "#FFF0F5",
+    iconColor: "#EC4899",
+    levelBg: "#E8F8F7",
+    levelColor: "#2BBCB0",
+  },
+  {
+    title: "Logical Reasoning",
+    description: "Structured thinking patterns that make complex problems simple.",
+    level: "Intermediate",
+    category: "Cognitive",
+    iconType: "text-math",
+    iconBg: "#E8F6FE",
+    iconColor: "#3B82F6",
+    levelBg: "#F3EEFF",
+    levelColor: "#8B5CF6",
+  },
+  {
+    title: "Focus & Attention",
+    description: "Build deep focus and resist distraction in a world of noise.",
+    level: "Beginner",
+    category: "Cognitive",
+    iconType: "target",
+    iconBg: "#E8F8F7",
+    iconColor: "#2BBCB0",
+    levelBg: "#E8F8F7",
+    levelColor: "#2BBCB0",
   },
 ];
 
@@ -376,8 +428,14 @@ export default function HomePage() {
   const [animatedStats, setAnimatedStats] = useState(trustStats.map(() => 0));
   const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
   const [demoType, setDemoType] = useState<"attention" | "writing" | null>(null);
+  const [activeCategory, setActiveCategory] = useState("All Programs");
+
+  const statsRef = useRef(null);
+  const isStatsInView = useInView(statsRef, { once: true, amount: 0.5 });
 
   useEffect(() => {
+    if (!isStatsInView) return;
+
     const duration = 1800;
     const frameMs = 24;
     const totalFrames = Math.ceil(duration / frameMs);
@@ -396,7 +454,7 @@ export default function HomePage() {
     }, frameMs);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [isStatsInView]);
 
   const formatStat = (value: number) => `${value.toLocaleString("en-IN")}+`;
 
@@ -1123,116 +1181,174 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ── 4. PROGRAMS BY AGE ───────────────────────────────────── */}
+      {/* ── 4. PROGRAMS ──────────────────────────────────────────── */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <FadeInUp className="text-center mb-12">
+          {/* Centered Header & Subtitle */}
+          <FadeInUp className="text-center mb-10 flex flex-col items-center">
             <p
-              className="text-sm font-semibold uppercase tracking-wider mb-3"
-              style={{ color: "#4FC3F7", fontFamily: "var(--font-nunito)" }}
+              className="text-sm font-semibold uppercase tracking-wider mb-3 flex items-center justify-center gap-1.5"
+              style={{ color: "#2BBCB0", fontFamily: "var(--font-nunito)" }}
             >
-              Age-Appropriate Learning
+              <Folder size={14} /> PROGRAMS
             </p>
             <h2
               style={{
                 fontFamily: "var(--font-nunito)",
                 fontWeight: 800,
-                fontSize: "clamp(28px, 4vw, 42px)",
+                fontSize: "clamp(32px, 4.5vw, 48px)",
                 color: "#1A1A1A",
+                lineHeight: 1.15,
+                marginBottom: 16,
               }}
             >
-              Programs for Every Age
+              Skills that <span style={{ color: "#F4845F" }}>actually matter</span>
             </h2>
+            <p className="text-base sm:text-lg max-w-2xl" style={{ color: "#6B7280" }}>
+              Eight research-backed programs designed for children ages 6–16.
+            </p>
           </FadeInUp>
 
-          <StaggerContainer className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {programs.map((prog) => (
-              <StaggerItem key={prog.label}>
-                <motion.div
-                  whileHover={{ y: -6 }}
-                  transition={{ type: "spring", stiffness: 280, damping: 20 }}
-                  className="rounded-2xl overflow-hidden bg-white"
+          {/* Category Filter Tiles */}
+          <FadeInUp className="flex flex-wrap items-center justify-center gap-3 mb-12">
+            {["All Programs", "Communication", "Cognitive", "Emotional"].map((cat) => {
+              const isActive = activeCategory === cat;
+              return (
+                <button
+                  key={cat}
+                  type="button"
+                  onClick={() => setActiveCategory(cat)}
+                  className="px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 border"
                   style={{
-                    border: "1px solid #F3F4F6",
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.06)",
+                    backgroundColor: isActive ? "#101828 " : "#FFFFFF",
+                    borderColor: isActive ? "#F4845F" : "#E5E7EB",
+                    color: isActive ? "#FFFFFF" : "#6B7280",
+                    fontFamily: "var(--font-nunito)",
+                    boxShadow: isActive
+                      ? "0 4px 12px rgba(244, 132, 95, 0.25)"
+                      : "none",
                   }}
                 >
-                  {/* Image with age badge */}
-                  <div className="relative" style={{ aspectRatio: "4/3" }}>
-                    <Image
-                      src={prog.image}
-                      alt={`${prog.label} program — ${prog.age}`}
-                      fill
-                      className="object-cover"
-                      sizes="(max-width: 768px) 100vw, 33vw"
-                    />
-                    {/* Age badge overlay */}
-                    <div className="absolute top-4 left-4">
-                      <span
-                        className="px-3 py-1 rounded-full text-xs font-bold"
+                  {cat}
+                </button>
+              );
+            })}
+          </FadeInUp>
+
+          {/* Cards Grid */}
+          <motion.div 
+            layout
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+          >
+            {programsData
+              .filter((prog) => activeCategory === "All Programs" || prog.category === activeCategory)
+              .map((prog) => {
+                return (
+                  <motion.div
+                    key={prog.title}
+                    layout
+                    whileHover={{ y: -6 }}
+                    transition={{ type: "spring", stiffness: 280, damping: 20 }}
+                    className="rounded-[2rem] p-6 h-full flex flex-col justify-between"
+                    style={{
+                      border: "1px solid #E5E7EB",
+                      boxShadow: prog.isPopular 
+                        ? "0 8px 24px rgba(0, 0, 0, 0.04)"
+                        : "0 4px 20px rgba(0, 0, 0, 0.03)",
+                      background: prog.isPopular ? "#FFF9F6" : "#FFFFFF",
+                      transition: "box-shadow 0.22s ease",
+                    }}
+                  >
+                    <div>
+                      {/* Icon & "Most Popular" Badge */}
+                      <div className="flex justify-between items-center mb-5">
+                        <div
+                          className="w-10 h-10 rounded-xl flex items-center justify-center"
+                          style={{ background: prog.iconBg }}
+                        >
+                          {prog.iconType === "pencil" && <Pencil size={18} color={prog.iconColor} />}
+                          {prog.iconType === "mic" && <Mic2 size={18} color={prog.iconColor} />}
+                          {prog.iconType === "brain" && <Brain size={18} color={prog.iconColor} />}
+                          {prog.iconType === "book" && <BookOpen size={18} color={prog.iconColor} />}
+                          {prog.iconType === "heart" && <Heart size={18} color={prog.iconColor} />}
+                          {prog.iconType === "target" && <Target size={18} color={prog.iconColor} />}
+                          {prog.iconType === "text-abc" && (
+                            <span className="font-bold text-xs" style={{ color: prog.iconColor, fontFamily: "var(--font-nunito)" }}>
+                              Abc
+                            </span>
+                          )}
+                          {prog.iconType === "text-math" && (
+                            <span className="font-bold text-xs" style={{ color: prog.iconColor, fontFamily: "var(--font-nunito)" }}>
+                              √x
+                            </span>
+                          )}
+                        </div>
+                        
+                        {prog.isPopular && (
+                          <span
+                            className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider"
+                            style={{
+                              background: "linear-gradient(135deg, #FFEBE5 0%, #FFDFD5 100%)",
+                              color: "#E0533C",
+                              border: "1px solid #FFC4B3",
+                              boxShadow: "0 2px 8px rgba(224, 83, 60, 0.08)",
+                              fontFamily: "var(--font-nunito)",
+                            }}
+                          >
+                            <Flame size={11} fill="#E0533C" color="#E0533C" className="animate-pulse" /> Most Popular
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Title & Description */}
+                      <h3
+                        className="text-base font-bold mb-2"
                         style={{
-                          background: prog.badgeColor,
-                          color:
-                            prog.badgeColor === "#F5C518" ? "#1A1A1A" : "white",
+                          fontFamily: "var(--font-nunito)",
+                          color: "#1A1A1A",
+                        }}
+                      >
+                        {prog.title}
+                      </h3>
+                      <p
+                        className="text-xs leading-relaxed mb-6"
+                        style={{ color: "#6B7280" }}
+                      >
+                        {prog.description}
+                      </p>
+                    </div>
+
+                    {/* Footer Row */}
+                    <div
+                      className="flex items-center justify-between pt-4 mt-auto"
+                      style={{ borderTop: "1px solid #F3F4F6" }}
+                    >
+                      <span
+                        className="px-2.5 py-1 rounded-full text-[10px] font-bold"
+                        style={{
+                          background: prog.levelBg,
+                          color: prog.levelColor,
                           fontFamily: "var(--font-nunito)",
                         }}
                       >
-                        {prog.age}
+                        {prog.level}
                       </span>
+                      
+                      <Link
+                        href="/workshops"
+                        className="inline-flex items-center gap-1 text-xs font-bold transition-all hover:gap-1.5"
+                        style={{
+                          color: "#F4845F",
+                          fontFamily: "var(--font-nunito)",
+                        }}
+                      >
+                        Learn more <ArrowRight size={12} />
+                      </Link>
                     </div>
-                  </div>
-
-                  {/* Content */}
-                  <div className="p-6">
-                    <h3
-                      className="text-xl font-bold mb-3"
-                      style={{
-                        fontFamily: "var(--font-nunito)",
-                        color: "#1A1A1A",
-                      }}
-                    >
-                      {prog.label}
-                    </h3>
-                    <div className="flex flex-wrap gap-2 mb-4">
-                      {prog.programs.map((p, i) => (
-                        <span
-                          key={p}
-                          className="px-2.5 py-1 rounded-full text-xs font-semibold"
-                          style={{
-                            background:
-                              i % 3 === 0
-                                ? "#E8F8F7"
-                                : i % 3 === 1
-                                  ? "#FEF0EB"
-                                  : "#E8F6FE",
-                            color:
-                              i % 3 === 0
-                                ? "#2BBCB0"
-                                : i % 3 === 1
-                                  ? "#F4845F"
-                                  : "#4FC3F7",
-                            fontFamily: "var(--font-nunito)",
-                          }}
-                        >
-                          {p}
-                        </span>
-                      ))}
-                    </div>
-                    <Link
-                      href="/workshops"
-                      className="inline-flex items-center gap-2 text-sm font-bold transition-colors"
-                      style={{
-                        color: prog.chipColor,
-                        fontFamily: "var(--font-nunito)",
-                      }}
-                    >
-                      Explore Programs <ArrowRight size={14} />
-                    </Link>
-                  </div>
-                </motion.div>
-              </StaggerItem>
-            ))}
-          </StaggerContainer>
+                  </motion.div>
+                );
+              })}
+          </motion.div>
         </div>
       </section>
 
@@ -1266,6 +1382,7 @@ export default function HomePage() {
                 fontFamily: "var(--font-nunito)",
                 fontWeight: 800,
                 fontSize: "clamp(30px, 5vw, 52px)",
+                color: "#F6F8FA",
               }}
             >
               Explore Our Workshops
@@ -1560,7 +1677,7 @@ export default function HomePage() {
       </section>
 
       {/* ── 7. STATS & TRUST ─────────────────────────────────────── */}
-      <section className="py-14" style={{ background: "#FAFAF8" }}>
+      <section ref={statsRef} className="py-14" style={{ background: "#FAFAF8" }}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <FadeInUp>
             <div

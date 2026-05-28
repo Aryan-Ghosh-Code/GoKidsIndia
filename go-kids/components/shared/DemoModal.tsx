@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle2 } from "lucide-react";
 
@@ -24,6 +25,17 @@ const writingQuestions = [
 export function DemoModal({ isOpen, onClose, assessmentType }: DemoModalProps) {
   const questions = assessmentType === "attention" ? attentionQuestions : writingQuestions;
   const title = assessmentType === "attention" ? "Attention Span - Demo Questions" : "Writing Ability - Demo Questions";
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "unset";
+    }
+    return () => {
+      document.body.style.overflow = "unset";
+    };
+  }, [isOpen]);
 
   return (
     <AnimatePresence>
