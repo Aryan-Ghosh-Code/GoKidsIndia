@@ -18,6 +18,11 @@ import {
   Phone,
   Mail,
   MapPin,
+  FlaskConical,
+  Target,
+  PenTool,
+  Sparkles,
+  Clock,
 } from "lucide-react";
 import FloatingShapes from "@/components/animations/FloatingShapes";
 import {
@@ -27,6 +32,7 @@ import {
 } from "@/components/animations/MotionWrapper";
 import Navbar from "@/components/shared/Navbar";
 import Footer from "@/components/shared/Footer";
+import { DemoModal } from "@/components/shared/DemoModal";
 
 const steps = [
   {
@@ -368,6 +374,8 @@ export default function HomePage() {
   const [journeyMode, setJourneyMode] = useState<"full" | "anywhere">("full");
   const [activeJourneyStep, setActiveJourneyStep] = useState(steps[0].id);
   const [animatedStats, setAnimatedStats] = useState(trustStats.map(() => 0));
+  const [isDemoModalOpen, setIsDemoModalOpen] = useState(false);
+  const [demoType, setDemoType] = useState<"attention" | "writing" | null>(null);
 
   useEffect(() => {
     const duration = 1800;
@@ -862,6 +870,256 @@ export default function HomePage() {
               </p>
             )}
           </div>
+        </div>
+      </section>
+
+      {/* ── 1.5. ASSESSMENTS ──────────────────────────────────────── */}
+      <section className="py-20" style={{ background: "#FAFAF8" }}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <FadeInUp className="mb-14 text-center max-w-3xl mx-auto flex flex-col items-center">
+            <p
+              className="text-sm font-semibold uppercase tracking-wider mb-3 flex items-center justify-center gap-1.5"
+              style={{ color: "#F4845F", fontFamily: "var(--font-nunito)" }}
+            >
+              <FlaskConical size={16} /> Assessments
+            </p>
+            <h2
+              style={{
+                fontFamily: "var(--font-nunito)",
+                fontWeight: 800,
+                fontSize: "clamp(32px, 4.5vw, 48px)",
+                color: "#1A1A1A",
+                lineHeight: 1.15,
+                marginBottom: 16,
+              }}
+            >
+              Understand your child before you{" "}
+              <span style={{ color: "#F4845F" }}>guide them</span>
+            </h2>
+            <p className="text-base sm:text-lg" style={{ color: "#6B7280" }}>
+              Science-backed assessments that reveal who your child really is —
+              not just how they score.
+            </p>
+          </FadeInUp>
+
+          <StaggerContainer className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Attention Span Card */}
+            <StaggerItem>
+              <motion.div
+                whileHover={{
+                  y: -6,
+                  boxShadow: "0 12px 32px rgba(0,0,0,0.08)",
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="bg-white rounded-[2rem] p-8 h-full flex flex-col relative"
+                style={{
+                  border: "1px solid #E5E7EB",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
+                }}
+              >
+                <div className="flex justify-between items-start mb-8">
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center"
+                    style={{ background: "#FEF0EB", color: "#F4845F" }}
+                  >
+                    <Target size={24} />
+                  </div>
+                  <div
+                    className="w-14 h-14 rounded-full border-[3px] flex items-center justify-center relative"
+                    style={{ borderColor: "#FEF0EB" }}
+                  >
+                    <svg
+                      className="absolute inset-0 w-full h-full transform -rotate-90"
+                      viewBox="0 0 36 36"
+                    >
+                      <path
+                        className="text-[#F4845F]"
+                        strokeDasharray="73, 100"
+                        d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="3"
+                      />
+                    </svg>
+                    <span
+                      className="text-sm font-bold z-10"
+                      style={{
+                        color: "#F4845F",
+                        fontFamily: "var(--font-nunito)",
+                      }}
+                    >
+                      73%
+                    </span>
+                  </div>
+                </div>
+
+                <h3
+                  className="text-xl font-bold mb-2"
+                  style={{ fontFamily: "var(--font-nunito)", color: "#1A1A1A" }}
+                >
+                  Attention Span
+                </h3>
+                <p
+                  className="text-sm leading-relaxed mb-6 flex-1"
+                  style={{ color: "#6B7280" }}
+                >
+                  Find out how long your child can stay focused and what breaks
+                  their concentration cycle.
+                </p>
+
+                <div
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold mb-8 w-fit"
+                  style={{ background: "#E8F8F7", color: "#8B5CF6" }}
+                >
+                  <Sparkles size={12} /> Powered by adaptive assessment engine
+                </div>
+
+                <div
+                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-6 mt-auto gap-4 relative z-10"
+                  style={{ borderTop: "1px solid #F3F4F6" }}
+                >
+                  <div
+                    className="flex items-center gap-1.5 text-sm font-semibold shrink-0"
+                    style={{ color: "#9CA3AF" }}
+                  >
+                    <Clock size={16} /> ~20 minutes
+                  </div>
+                  <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                    <button
+                      onClick={() => {
+                        setDemoType("attention");
+                        setIsDemoModalOpen(true);
+                      }}
+                      className="px-6 py-2.5 rounded-full text-sm font-bold border-2 border-gray-200 text-gray-600 bg-white hover:border-gray-900 hover:text-gray-900 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md w-full sm:w-auto"
+                    >
+                      Demo Questions
+                    </button>
+                    <Link
+                      href="/assessments"
+                      className="px-6 py-2.5 rounded-full text-sm font-bold text-white bg-gray-900 hover:bg-black transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md shadow-sm w-full sm:w-auto text-center"
+                    >
+                      Start Assessment
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            </StaggerItem>
+
+            {/* Writing Ability Card */}
+            <StaggerItem>
+              <motion.div
+                whileHover={{
+                  y: -6,
+                  boxShadow: "0 12px 32px rgba(0,0,0,0.08)",
+                }}
+                transition={{ type: "spring", stiffness: 300, damping: 20 }}
+                className="bg-white rounded-[2rem] p-8 h-full flex flex-col relative"
+                style={{
+                  border: "1px solid #E5E7EB",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.06)",
+                }}
+              >
+                <div className="flex justify-between items-start mb-8">
+                  <div
+                    className="w-12 h-12 rounded-2xl flex items-center justify-center"
+                    style={{ background: "#E8F8F7", color: "#2BBCB0" }}
+                  >
+                    <PenTool size={24} />
+                  </div>
+                  <div
+                    className="flex items-end gap-1 h-12 opacity-80"
+                    style={{
+                      transform: "scale(1.2)",
+                      transformOrigin: "bottom right",
+                    }}
+                  >
+                    <div
+                      className="w-1.5 h-4 rounded-sm"
+                      style={{ background: "#E8F8F7" }}
+                    ></div>
+                    <div
+                      className="w-1.5 h-6 rounded-sm"
+                      style={{ background: "#2BBCB0" }}
+                    ></div>
+                    <div
+                      className="w-1.5 h-10 rounded-sm"
+                      style={{ background: "#2BBCB0" }}
+                    ></div>
+                    <div
+                      className="w-1.5 h-8 rounded-sm"
+                      style={{ background: "#2BBCB0" }}
+                    ></div>
+                  </div>
+                </div>
+
+                <h3
+                  className="text-xl font-bold mb-2"
+                  style={{ fontFamily: "var(--font-nunito)", color: "#1A1A1A" }}
+                >
+                  Writing Ability
+                </h3>
+                <p
+                  className="text-sm leading-relaxed mb-6 flex-1"
+                  style={{ color: "#6B7280" }}
+                >
+                  Measure speed, accuracy, and style — see exactly where your
+                  child's writing needs a boost.
+                </p>
+
+                <div
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-semibold mb-8 w-fit"
+                  style={{ background: "#F3EEFF", color: "#8B5CF6" }}
+                >
+                  <Sparkles size={12} /> Powered by adaptive assessment engine
+                </div>
+
+                <div
+                  className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-6 mt-auto gap-4 relative z-10"
+                  style={{ borderTop: "1px solid #F3F4F6" }}
+                >
+                  <div
+                    className="flex items-center gap-1.5 text-sm font-semibold shrink-0"
+                    style={{ color: "#9CA3AF" }}
+                  >
+                    <Clock size={16} /> ~25 minutes
+                  </div>
+                  <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto">
+                    <button
+                      onClick={() => {
+                        setDemoType("writing");
+                        setIsDemoModalOpen(true);
+                      }}
+                      className="px-6 py-2.5 rounded-full text-sm font-bold border-2 border-gray-200 text-gray-600 bg-white hover:border-gray-900 hover:text-gray-900 transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md w-full sm:w-auto"
+                    >
+                      Demo Questions
+                    </button>
+                    <Link
+                      href="/assessments"
+                      className="px-6 py-2.5 rounded-full text-sm font-bold text-white bg-gray-900 hover:bg-black transition-all duration-300 ease-out hover:-translate-y-1 hover:shadow-md shadow-sm w-full sm:w-auto text-center"
+                    >
+                      Start Assessment
+                    </Link>
+                  </div>
+                </div>
+              </motion.div>
+            </StaggerItem>
+          </StaggerContainer>
+
+          <FadeInUp className="mt-12 flex justify-center">
+            <Link
+              href="/assessments"
+              className="text-base font-bold px-8 py-3.5 rounded-full flex items-center justify-center gap-2 transition-transform hover:scale-105 shadow-sm"
+              style={{
+                background: "#F5C518",
+                color: "#1A1A1A",
+                fontFamily: "var(--font-nunito)",
+              }}
+            >
+              Explore All Assessments <ArrowRight size={20} />
+            </Link>
+          </FadeInUp>
         </div>
       </section>
 
@@ -1615,6 +1873,11 @@ export default function HomePage() {
       </section>
 
       <Footer />
+      <DemoModal
+        isOpen={isDemoModalOpen}
+        onClose={() => setIsDemoModalOpen(false)}
+        assessmentType={demoType}
+      />
     </div>
   );
 }
