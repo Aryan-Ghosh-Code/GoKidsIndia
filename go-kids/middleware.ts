@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getToken } from "next-auth/jwt";
+import { auth } from "@/auth.edge";
 
 const PROTECTED_ROUTES: Record<string, string[]> = {
   "/parent": ["parent", "admin", "superadmin"],
@@ -10,7 +10,7 @@ const PROTECTED_ROUTES: Record<string, string[]> = {
 };
 
 const ROLE_REDIRECTS: Record<string, string> = {
-  parent: "/",
+  parent: "/parent/dashboard",
   instructor: "/instructor/dashboard",
   mentor: "/mentor/dashboard",
   admin: "/admin/dashboard",
@@ -22,29 +22,47 @@ const AUTH_ONLY_PATHS = ["/login", "/register"];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
 
-  console.log(`Middleware path: ${pathname} | User: ${token?.email || "anonymous"} | Role: ${token?.role || "none"}`);
+  // edgeAuth() is the edge-safe Auth.js v5 function — handles __Secure- cookie
+  // prefixes correctly in both local (HTTP) and production (HTTPS / Vercel).
+  // The old getToken() from next-auth/jwt silently returns null on Vercel because
+  // it looks for "next-auth.session-token" while Auth.js v5 writes
+  // "__Secure-authjs.session-token" on HTTPS, causing dashboard access to fail.
+  const session = await auth();
+  const userRole = (session?.user as { role?: string })?.role;
 
-  // Redirect logged-in users away from auth pages
-  if (token && AUTH_ONLY_PATHS.includes(pathname)) {
-    const role = token.role as string;
-    const redirect = ROLE_REDIRECTS[role] || "/";
+  // ── Development-only logging — never leaks PII to Vercel logs ───
+  if (process.env.NODE_ENV !== "production") {
+    console.log(
+      `[Middleware] ${pathname} | User: ${session?.user?.email ?? "anonymous"} | Role: ${userRole ?? "none"}`
+    );
+  }
+
+  // Only redirect away from auth pages if the session has a known, valid role.
+  // A session with no role (stale/partial token) must NOT block access to /login.
+  if (session && userRole && AUTH_ONLY_PATHS.includes(pathname)) {
+    const redirect = ROLE_REDIRECTS[userRole] || "/";
     return NextResponse.redirect(new URL(redirect, req.url));
   }
 
   // Check protected routes
   for (const [route, allowedRoles] of Object.entries(PROTECTED_ROUTES)) {
     if (pathname.startsWith(route)) {
-      if (!token) {
+      if (!session) {
         const loginUrl = new URL("/login", req.url);
-        loginUrl.searchParams.set("callbackUrl", pathname);
+        // Only set callbackUrl for safe internal paths — prevents open-redirect injection
+        if (
+          pathname.startsWith("/") &&
+          !pathname.startsWith("//") &&
+          Object.keys(PROTECTED_ROUTES).some((r) => pathname.startsWith(r))
+        ) {
+          loginUrl.searchParams.set("callbackUrl", pathname);
+        }
         return NextResponse.redirect(loginUrl);
       }
 
-      const role = token.role as string;
-      if (!allowedRoles.includes(role)) {
-        const redirect = ROLE_REDIRECTS[role] || "/";
+      if (!userRole || !allowedRoles.includes(userRole)) {
+        const redirect = ROLE_REDIRECTS[userRole ?? ""] || "/";
         return NextResponse.redirect(new URL(redirect, req.url));
       }
     }
